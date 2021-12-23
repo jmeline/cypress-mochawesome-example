@@ -1,5 +1,6 @@
 # Getting Started with Create React App + Cypress + Mochawesome
 
+## Install 
 * Create-react-app
 ```
 $ npx create-react-app cypress-mocawesome-example --template cra-template-typescript
@@ -16,6 +17,18 @@ $ npm i -D mocha mochawesome mochawesome-merge mochawesome-report-generator
 ```
 $ npm i -D rimraf
 ```
+
+* Open Cypress && Write your tests
+```
+$ npm run cy:open
+```
+Opening cypress and running the examples builds all the directories in cypress. Helpful but not needed
+
+```
+$ mkdir cypress/integration/App
+$ touch cypress/integration/App/App.spec.js
+```
+## Configuration
 * Edit package.json and add scripts to support mochawesome
 ```json
 {
@@ -35,18 +48,7 @@ $ npm i -D rimraf
   }
 }
 ```
-
-* Open Cypress && Write your tests
-```
-$ npm run cy:open
-```
-opening cypress and running the examples builds all the directories in cypress. Helpful but not needed
-
-```
-$ mkdir cypress/integration/App
-$ touch cypress/integration/App/App.spec.js
-```
-* Add mochawesome settings to cypress.json
+* Add mochawesome settings to cypress/cypress.json (feel free to move the cypress.json in the project directory, remember to update package.json scripts if you do)
 ```json
 {
   "testFiles": "**/*.spec.{js,ts,jsx,tsx}",
@@ -60,8 +62,8 @@ $ touch cypress/integration/App/App.spec.js
   }
 } 
 ```
-
-* Add a test (see [writing first test](https://on.cypress.io/writing-first-test) for more info)
+## Add tests (if you want)
+* Add a test in the integration directory (see [writing first test](https://on.cypress.io/writing-first-test) for more info)
     - You can skip this and use the example integrations.
 ```
 // cypress/integration/App/App.spec.js
@@ -71,11 +73,17 @@ describe("App", () => {
     })
 })
 ```
+## Run tests and create reports
+
+```
+$ npm run cy:test
+```
 
 I left in the examples so that I could have multiple reports generated.
 
 ![image](https://user-images.githubusercontent.com/6642964/147271754-31bf5452-24b3-4452-8425-3523d73189f4.png)
 
+## View Report
 All these reports are then merged into a single beautiful html report located here: cypress\reports\mochareports\report.html
 
 ![image](https://user-images.githubusercontent.com/6642964/147271860-4043c981-eb94-4373-bddb-3486c70c5e1b.png)
