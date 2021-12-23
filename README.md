@@ -1,45 +1,88 @@
-# Getting Started with Create React App
+# Getting Started with Create React App + Cypress + Mochawesome
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+* Create-react-app
+```
+$ npx create-react-app cypress-mocawesome-example --template cra-template-typescript
+```
+* Cypress
+```
+$ npm i -D cypress
+```
+* Mochawesome
+```
+$ npm i -D mocha mochawesome mochawesome-merge mochawesome-report-generator
+```
+* extra package(s)
+```
+$ npm i -D rimraf
+```
+* Edit package.json and add scripts to support mochawesome
+```json
+{
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "cy:run": "cypress run -C cypress/cypress.json",
+    "cy:open": "cypress open -C cypress/cypress.json",
+    "cy:test": "npm run cy:run && npm run posttest",
+    "clean:reports": "rimraf cypress/reports && mkdir cypress\\reports && mkdir cypress\\reports\\mochareports",
+    "combine-reports": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",
+    "generate-report": "marge cypress/reports/mochareports/report.json -f report -o cypress/reports/mochareports",
+    "posttest": "npm run combine-reports && npm run generate-report",
+    "pretest": "npm run clean:reports"
+  }
+}
+```
 
-## Available Scripts
+* Open Cypress && Write your tests
+```
+$ npm run cy:open
+```
+opening cypress and running the examples builds all the directories in cypress. Helpful but not needed
 
-In the project directory, you can run:
+```
+$ mkdir cypress/integration/App
+$ touch cypress/integration/App/App.spec.js
+```
+* Add mochawesome settings to cypress.json
+```json
+{
+  "testFiles": "**/*.spec.{js,ts,jsx,tsx}",
+  "reporter": "mochawesome",
+  "reporterOptions": {
+    "reportDir": "cypress/reports/mocha",
+    "quite": true,
+    "overwrite": false,
+    "html": false,
+    "json": true
+  }
+} 
+```
 
-### `npm start`
+* Add a test (see [writing first test](https://on.cypress.io/writing-first-test) for more info)
+    - You can skip this and use the example integrations.
+```
+// cypress/integration/App/App.spec.js
+describe("App", () => {
+    it("checks that the link text is shown", () => {
+        expect(true).to.equal(true)
+    })
+})
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+I left in the examples so that I could have multiple reports generated.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+![image](https://user-images.githubusercontent.com/6642964/147271754-31bf5452-24b3-4452-8425-3523d73189f4.png)
 
-### `npm test`
+All these reports are then merged into a single beautiful html report located here: cypress\reports\mochareports\report.html
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![image](https://user-images.githubusercontent.com/6642964/147271860-4043c981-eb94-4373-bddb-3486c70c5e1b.png)
 
-### `npm run build`
+Done :)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
+I found that mochawesome works with older versions of Cypress. We had v5.6.0 at work and mochawesome worked fine with this version as well as the newer 9.2.0.
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
