@@ -1,0 +1,11 @@
+{
+  "testFiles": "**/*.spec.{js,ts,jsx,tsx}",
+  "reporter": "mochawesome",
+  "reporterOptions": {
+    "reportDir": "cypress/reports/mocha",
+    "quite": true,
+    "overwrite": false,
+    "html": false,
+    "json": true
+  }
+}
