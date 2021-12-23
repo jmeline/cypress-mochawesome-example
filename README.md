@@ -81,7 +81,7 @@ $ npm run cy:test
 
 I left in the examples so that I could have multiple reports generated.
 
-![image](https://user-images.githubusercontent.com/6642964/147271754-31bf5452-24b3-4452-8425-3523d73189f4.png)
+![image](https://user-images.githubusercontent.com/6642964/147273469-c141aead-dfdc-49ed-a956-ecf0b6729bb9.png)
 
 ## View Report
 All these reports are then merged into a single beautiful html report located here: cypress\reports\mochareports\report.html
